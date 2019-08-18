@@ -11,6 +11,7 @@ var font_size = 1
 
 func _ready():
 	container.rect_position = Vector2(10, 10)
+	container.rect_scale = Vector2(font_size, font_size)
 	
 	add_child(container)
 	
@@ -30,7 +31,6 @@ func _process(delta):
 func print(string, lifespan = 2.0):
 	var label = Label.new()
 	label.set_theme(theme)
-	label.rect_scale = Vector2(font_size, font_size)
 	label.text = string
 	container.add_child(label)
 	_labels.append(label)
