@@ -27,7 +27,7 @@ func _process(delta):
 			_lifespans.remove(i)
 			_ages.remove(i)
 
-func text(string, lifespan = 2.0):
+func print(string, lifespan = 2.0):
 	var label = Label.new()
 	label.set_theme(theme)
 	label.rect_scale = Vector2(font_size, font_size)
