@@ -12,9 +12,8 @@ var font_size = 1
 func _ready():
 	container.rect_position = Vector2(10, 10)
 	container.rect_scale = Vector2(font_size, font_size)
-	
+	container.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(container)
-	
 	theme.set_color("font_color", "Label", Color.white)
 	theme.set_color("font_color_shadow", "Label", Color.black)
 	theme.set_constant("shadow_as_outline", "Label", 1)
