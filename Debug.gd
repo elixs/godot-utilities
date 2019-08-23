@@ -30,7 +30,7 @@ func _process(delta):
 func print(string, lifespan = 2.0):
 	var label = Label.new()
 	label.set_theme(theme)
-	label.text = string
+	label.text = str(string)
 	container.add_child(label)
 	_labels.append(label)
 	_lifespans.append(lifespan)
