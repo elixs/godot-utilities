@@ -17,6 +17,7 @@ func _ready():
 	theme.set_color("font_color", "Label", Color.white)
 	theme.set_color("font_color_shadow", "Label", Color.black)
 	theme.set_constant("shadow_as_outline", "Label", 1)
+	layer = 128
 
 func _process(delta):
 	for i in range(_labels.size() - 1, -1, -1):
