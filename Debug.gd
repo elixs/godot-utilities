@@ -1,38 +1,29 @@
-extends CanvasLayer
+extends Node
 
-var _labels = []
-var _lifespans = []
-var _ages = []
 
-var container = VBoxContainer.new()
-var theme = Theme.new()
+@onready var canvas_layer  = CanvasLayer.new()
+@onready var container = VBoxContainer.new()
 
-var font_size = 1
 
-func _ready():
-	container.rect_position = Vector2(10, 10)
-	container.rect_scale = Vector2(font_size, font_size)
-	container.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	add_child(container)
-	theme.set_color("font_color", "Label", Color.white)
-	theme.set_color("font_color_shadow", "Label", Color.black)
-	theme.set_constant("shadow_as_outline", "Label", 1)
-	layer = 128
+func _ready() -> void:
+	if !OS.is_debug_build():
+		return
+	add_child(canvas_layer)
+	canvas_layer.layer = 1000
+	canvas_layer.add_child(container)
 
-func _process(delta):
-	for i in range(_labels.size() - 1, -1, -1):
-		_ages[i] += delta
-		if _ages[i] > _lifespans[i]:
-			container.remove_child(_labels[i])
-			_labels.remove(i)
-			_lifespans.remove(i)
-			_ages.remove(i)
 
-func print(string, lifespan = 2.0):
+func log(message: Variant, seconds: float = 2) -> void:
+	if multiplayer.multiplayer_peer is OfflineMultiplayerPeer:
+		print(message)
+	else:
+		print_rich("[b]%s:[/b] " % (("Server") if multiplayer.is_server() else "Client"), message)
 	var label = Label.new()
-	label.set_theme(theme)
-	label.text = str(string)
+	label.text = str(message)
+	label.set("theme_override_constants/outline_size", 2)
+	label.set("theme_override_colors/font_outline_color", Color.BLACK)
 	container.add_child(label)
-	_labels.append(label)
-	_lifespans.append(lifespan)
-	_ages.append(0)
+	container.move_child(label, 0)
+	await get_tree().create_timer(seconds).timeout
+	container.remove_child(label)
+	label.queue_free()
