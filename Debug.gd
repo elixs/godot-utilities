@@ -11,6 +11,7 @@ func _ready() -> void:
 	add_child(canvas_layer)
 	canvas_layer.layer = 1000
 	canvas_layer.add_child(container)
+	container.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 
 func log(message: Variant, seconds: float = 2) -> void:
